@@ -1,0 +1,1 @@
+public class PlayerCollisionHandler : CollisionHandler<Enemy, PlayerBorder> { }
