@@ -18,6 +18,8 @@ public class Enemy : Unit
     private EnemyStatus _enemyStatus;
     private EnemyAnimator _enemyAnimator;
 
+    [field: SerializeField] public int KillAward {get; private set; }
+
     public UnitStatusEventInvoker UnitStatusEventInvoker { get; private set; }
 
     private void Awake()

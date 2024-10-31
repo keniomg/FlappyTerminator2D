@@ -11,13 +11,13 @@ public class Player : Unit
 {
     private PlayerMover _playerMover;
     private PlayerInput _playerInput;
-    private PlayerHealth _playerHealth;
     private PlayerProjectileSpawner _playerProjectileSpawner;
     private AttackerData _attackerData;
     private PlayerStatus _playerStatus;
     private PlayerAnimator _playerAnimator;
     private Rigidbody2D _rigidbody;
 
+    public PlayerHealth PlayerHealth { get; private set; }
     public UnitStatusEventInvoker UnitStatusEventInvoker { get; private set; }
 
     private void Awake()
@@ -38,7 +38,7 @@ public class Player : Unit
 
         _playerMover = GetComponent<PlayerMover>();
         _playerInput = GetComponent<PlayerInput>();
-        _playerHealth = GetComponent<PlayerHealth>();
+        PlayerHealth = GetComponent<PlayerHealth>();
         _playerProjectileSpawner = GetComponent<PlayerProjectileSpawner>();
         _attackerData = GetComponent<AttackerData>();
         _playerStatus = GetComponent<PlayerStatus>();
@@ -50,7 +50,7 @@ public class Player : Unit
     public void InitializeComponents()
     {
         _playerMover.Initialize(_playerInput, _rigidbody, UnitStatusEventInvoker);
-        _playerHealth.Initialize(UnitStatusEventInvoker);
+        PlayerHealth.Initialize(UnitStatusEventInvoker);
         _playerStatus.Initialize(UnitStatusEventInvoker);
         _playerAnimator.Initialize(_playerStatus);
         _playerProjectileSpawner.Initialize(UnitStatusEventInvoker, _attackerData);

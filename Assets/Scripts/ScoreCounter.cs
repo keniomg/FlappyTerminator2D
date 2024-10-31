@@ -1,18 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class ScoreCounter : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private ScoreEventInvoker _scoreEventInvoker;
+
+    public int Score { get; private set; }
+
+    public event Action ScoreChanged;
+
+    private void OnEnable()
     {
-        
+        _scoreEventInvoker.ScoreChanged += OnScoreChanged;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        _scoreEventInvoker.ScoreChanged -= OnScoreChanged;
+    }
+
+    private void OnScoreChanged(int value)
+    {
+        Score += value;
+        ScoreChanged?.Invoke();
     }
 }

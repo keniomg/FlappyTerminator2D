@@ -4,6 +4,7 @@ public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] private Transform _playerSpawnPosition;
     [SerializeField] private Player _playerPrefab;
+    [SerializeField] private HealthViewerUIHealthBar _healthBarUI;
 
     private Player _player;
 
@@ -12,6 +13,7 @@ public class PlayerSpawner : MonoBehaviour
         _player = Instantiate(_playerPrefab, _playerSpawnPosition);
         _player.GetComponents();
         _player.InitializeComponents();
+        _healthBarUI.Initialize(_player.PlayerHealth);
     }
 
     private void OnEnable()

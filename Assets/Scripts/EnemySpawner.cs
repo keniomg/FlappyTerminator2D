@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int _poolMaximumSize;
     [SerializeField] private LayerMask _owner;
     [SerializeField] private GeneralCollisionEventInvoker _eventInvoker;
+    [SerializeField] private ScoreEventInvoker _scoreInvoker;
 
     private Vector2 _moveDirection;
     private WaitForSeconds _delay;
@@ -39,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
     private void AccompanyGet(Enemy enemyPrefab)
     {
         enemyPrefab.gameObject.SetActive(true);
-        enemyPrefab.UnitStatusEventInvoker.Register(enemyPrefab.gameObject.GetInstanceID(), OnEnemyHealthOver);
+        enemyPrefab.UnitStatusEventInvoker.Register(enemyPrefab.gameObject.GetInstanceID(), OnEnemyHealthChanged);
         SetPosition(enemyPrefab.gameObject);
 
         if (enemyPrefab.gameObject.TryGetComponent(out EnemyMover enemyMover))
@@ -57,7 +58,7 @@ public class EnemySpawner : MonoBehaviour
     private void AccompanyRelease(Enemy enemyPrefab)
     {
         enemyPrefab.gameObject.SetActive(false);
-        enemyPrefab.UnitStatusEventInvoker.Unregister(enemyPrefab.gameObject.GetInstanceID(), OnEnemyHealthOver);
+        enemyPrefab.UnitStatusEventInvoker.Unregister(enemyPrefab.gameObject.GetInstanceID(), OnEnemyHealthChanged);
 
         if (enemyPrefab.gameObject.TryGetComponent(out EnemyCollisionHandler collisionHandler))
         {
@@ -91,13 +92,14 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void OnEnemyHealthOver(GameObject enemyObject, UnitStatusTypes unitStatusType)
+    private void OnEnemyHealthChanged(GameObject enemyObject, UnitStatusTypes unitStatusType)
     {
         if (enemyObject.TryGetComponent(out Enemy enemy))
         {
             if (unitStatusType is UnitStatusTypes.Die)
             {
                 _pool.Release(enemy);
+                _scoreInvoker.Invoke(enemy.KillAward);
             }
         }
     }

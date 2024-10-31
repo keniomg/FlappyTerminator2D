@@ -14,7 +14,7 @@ public abstract class Health<UnitAttacker, UnitCollisionHandler> : BaseHealth, I
 
     public int CurrentValue { get; private set; }
 
-    public event Action<GameObject, UnitStatusTypes> Over;
+    public event Action<GameObject, UnitStatusTypes> ValueChanged;
 
     private void OnEnable()
     {
@@ -25,7 +25,7 @@ public abstract class Health<UnitAttacker, UnitCollisionHandler> : BaseHealth, I
     private void OnDisable()
     {
         _invoker.Unregister(gameObject.GetInstanceID(), HandleDamage);
-        _unitStatusEventInvoker.Unregister(gameObject.GetInstanceID(), Over);
+        _unitStatusEventInvoker.Unregister(gameObject.GetInstanceID(), ValueChanged);
     }
 
     public void TakeDamage(int decreaseValue, LayerMask attacker)
@@ -48,7 +48,7 @@ public abstract class Health<UnitAttacker, UnitCollisionHandler> : BaseHealth, I
     public void Initialize(UnitStatusEventInvoker unitStatusEventInvoker)
     {
         _unitStatusEventInvoker = unitStatusEventInvoker;
-        _unitStatusEventInvoker.Register(gameObject.GetInstanceID(), Over);
+        _unitStatusEventInvoker.Register(gameObject.GetInstanceID(), ValueChanged);
     }
 
     protected void HandleDamage(GameObject ownGameObject, GameObject attackerGameObject)
