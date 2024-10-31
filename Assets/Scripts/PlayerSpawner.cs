@@ -5,26 +5,30 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private Transform _playerSpawnPosition;
     [SerializeField] private Player _playerPrefab;
 
-    private UnitStatusEventInvoker _playerStatusEventInvoker;
     private Player _player;
+
+    private void Awake()
+    {
+        _player = Instantiate(_playerPrefab, _playerSpawnPosition);
+        _player.GetComponents();
+        _player.InitializeComponents();
+    }
 
     private void OnEnable()
     {
-        _player = Instantiate(_playerPrefab, _playerSpawnPosition);
-        _playerStatusEventInvoker = _player.TryGetComponent(out UnitStatusEventInvoker unitStatusEventInvoker) ? unitStatusEventInvoker : null;
-        _playerStatusEventInvoker.Register(_player.GetInstanceID(), OnPlayersGameOver);
+        _player.UnitStatusEventInvoker.Register(_player.gameObject.GetInstanceID(), OnPlayersGameOver);
     }
 
     private void OnDisable()
     {
-        _playerStatusEventInvoker.Unregister(_player.GetInstanceID(), OnPlayersGameOver);
+        _player.UnitStatusEventInvoker.Unregister(_player.gameObject.GetInstanceID(), OnPlayersGameOver);
     }
 
     private void OnPlayersGameOver(GameObject player, UnitStatusTypes statusType)
     {
         if (statusType is UnitStatusTypes.Die)
         {
-            Destroy(_playerPrefab.gameObject);
+            Destroy(_player.gameObject);
         }
     }
 }

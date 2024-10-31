@@ -14,11 +14,11 @@ public class Player : Unit
     private PlayerHealth _playerHealth;
     private PlayerProjectileSpawner _playerProjectileSpawner;
     private AttackerData _attackerData;
-    private UnitStatusEventInvoker _unitStatusEventInvoker;
     private PlayerStatus _playerStatus;
     private PlayerAnimator _playerAnimator;
-
     private Rigidbody2D _rigidbody;
+
+    public UnitStatusEventInvoker UnitStatusEventInvoker { get; private set; }
 
     private void Awake()
     {
@@ -32,9 +32,9 @@ public class Player : Unit
         _playerInput.ManageInput();
     }
 
-    private void GetComponents()
+    public void GetComponents()
     {
-        _unitStatusEventInvoker = ScriptableObject.CreateInstance<UnitStatusEventInvoker>();
+        UnitStatusEventInvoker = ScriptableObject.CreateInstance<UnitStatusEventInvoker>();
 
         _playerMover = GetComponent<PlayerMover>();
         _playerInput = GetComponent<PlayerInput>();
@@ -47,12 +47,12 @@ public class Player : Unit
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void InitializeComponents()
+    public void InitializeComponents()
     {
-        _playerMover.Initialize(_playerInput, _rigidbody, _unitStatusEventInvoker);
-        _playerHealth.Initialize(_unitStatusEventInvoker);
-        _playerStatus.Initialize(_unitStatusEventInvoker);
+        _playerMover.Initialize(_playerInput, _rigidbody, UnitStatusEventInvoker);
+        _playerHealth.Initialize(UnitStatusEventInvoker);
+        _playerStatus.Initialize(UnitStatusEventInvoker);
         _playerAnimator.Initialize(_playerStatus);
-        _playerProjectileSpawner.Initialize(_unitStatusEventInvoker, _attackerData);
+        _playerProjectileSpawner.Initialize(UnitStatusEventInvoker, _attackerData);
     }
 }
