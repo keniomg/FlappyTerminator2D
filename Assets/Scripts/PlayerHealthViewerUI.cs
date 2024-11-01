@@ -9,7 +9,7 @@ public abstract class PlayerHealthViewerUI : MonoBehaviour
         Health.ValueChanged -= OnValueChanged;
     }
 
-    public void Initialize(PlayerHealth playerHealth)
+    public virtual void Initialize(PlayerHealth playerHealth)
     {
         Health = playerHealth;
         Health.ValueChanged += OnValueChanged;

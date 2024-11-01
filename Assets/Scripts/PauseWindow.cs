@@ -10,7 +10,6 @@ public class PauseWindow : Window
     {
         base.OnCloseWindowButtonClicked();
         _scenesEventInvoker.Invoke(ScenesEventsTypes.GameContinued);
-
     }
 
     public override void OnOpenWindowButtonClicked()
