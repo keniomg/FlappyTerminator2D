@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(PlayerInput), typeof(PlayerMover))]
 [RequireComponent(typeof(PlayerHealth), typeof(PlayerProjectileSpawner), typeof(AttackerData))]
-[RequireComponent (typeof(PlayerCollisionHandler), typeof(PlayerStatus), typeof(PlayerAnimator))]
+[RequireComponent(typeof(PlayerCollisionHandler), typeof(PlayerStatus), typeof(PlayerAnimator))]
 [RequireComponent(typeof(Animator))]
 
 public class Player : Unit
@@ -42,7 +42,7 @@ public class Player : Unit
         _playerProjectileSpawner = GetComponent<PlayerProjectileSpawner>();
         _attackerData = GetComponent<AttackerData>();
         _playerStatus = GetComponent<PlayerStatus>();
-        _playerAnimator = GetComponent <PlayerAnimator>();
+        _playerAnimator = GetComponent<PlayerAnimator>();
 
         _rigidbody = GetComponent<Rigidbody2D>();
     }
