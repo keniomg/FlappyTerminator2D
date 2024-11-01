@@ -6,16 +6,15 @@ public class ScoreCounter : MonoBehaviour
     [SerializeField] private ScoreEventInvoker _scoreEventInvoker;
     [SerializeField] private ScenesEventsInvoker _scenesEventsInvoker;
 
-    private int _defaultScore;
-
+    public int DefaultScore { get; private set; }
     public int Score { get; private set; }
 
     public event Action ScoreChanged;
 
     private void Awake()
     {
-        _defaultScore = 0;
-        Score = _defaultScore;
+        DefaultScore = 0;
+        Score = DefaultScore;
     }
 
     private void OnEnable()
@@ -42,7 +41,7 @@ public class ScoreCounter : MonoBehaviour
             sceneEventType is ScenesEventsTypes.GameStarted ||
             sceneEventType is ScenesEventsTypes.OpenedMainMenu)
         {
-            Score = _defaultScore;
+            Score = DefaultScore;
         }
     }
 }

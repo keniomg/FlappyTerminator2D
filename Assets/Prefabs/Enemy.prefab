@@ -142,8 +142,8 @@ MonoBehaviour:
   <Own>k__BackingField:
     serializedVersion: 2
     m_Bits: 128
-  _invoker: {fileID: 11400000, guid: 404aa2bd7f5be0445b9bddc4d650f70a, type: 2}
   <MaximumValue>k__BackingField: 150
+  _invoker: {fileID: 11400000, guid: 404aa2bd7f5be0445b9bddc4d650f70a, type: 2}
 --- !u!114 &3055762213320483242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e0ade98ac800cc45aee14233f899f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <KillAward>k__BackingField: 5
 --- !u!58 &8034956017069179782
 CircleCollider2D:
   m_ObjectHideFlags: 0

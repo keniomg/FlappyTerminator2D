@@ -29,11 +29,15 @@ public class PlayerSpawner : MonoBehaviour
                 maxSize: _poolMaximumSize);
     }
 
-    private void OnEnable()
+    private void Start()
     {
         _player = _pool.Get();
         _player.UnitStatusEventInvoker.Register(_player.gameObject.GetInstanceID(), OnPlayersGameOver);
         _systemEventInvoker.SceneStatusChanged += OnSceneStatusChanged;
+    }
+
+    private void OnEnable()
+    {
     }
 
     private void OnDisable()
