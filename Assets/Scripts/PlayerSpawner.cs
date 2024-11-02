@@ -7,7 +7,7 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private Player _playerPrefab;
     [SerializeField] private PlayerHealthViewerUIHealthBar _healthBarUI;
     [SerializeField] private PlayerHealthViewerUIText _healthTextUI;
-    [SerializeField] private ScenesEventsInvoker _systemEventInvoker;
+    [SerializeField] private ScenesEventsInvoker _sceneEventInvoker;
 
     private ObjectPool<Player> _pool;
     private Player _player;
@@ -31,23 +31,19 @@ public class PlayerSpawner : MonoBehaviour
 
     private void Start()
     {
-        _player = _pool.Get();
-        _player.UnitStatusEventInvoker.Register(_player.gameObject.GetInstanceID(), OnPlayersGameOver);
-        _systemEventInvoker.SceneStatusChanged += OnSceneStatusChanged;
-    }
-
-    private void OnEnable()
-    {
+        _pool.Get();
+        _sceneEventInvoker.SceneStatusChanged += OnSceneStatusChanged;
     }
 
     private void OnDisable()
     {
-        _player.UnitStatusEventInvoker.Unregister(_player.gameObject.GetInstanceID(), OnPlayersGameOver);
-        _systemEventInvoker.SceneStatusChanged -= OnSceneStatusChanged;
+        _sceneEventInvoker.SceneStatusChanged -= OnSceneStatusChanged;
     }
 
     private void AccompanyGet(Player player)
     {
+        player.UnitStatusEventInvoker.Register(_player.gameObject.GetInstanceID(), OnPlayersGameOver);
+
         if (player.TryGetComponent(out PlayerHealth playerHealth))
         {
             playerHealth.ResetValue();
@@ -60,13 +56,21 @@ public class PlayerSpawner : MonoBehaviour
         _healthTextUI.Initialize(player.PlayerHealth);
     }
 
-    private void AccompanyRelease(Player player) { }
+    private void AccompanyRelease(Player player) 
+    {
+        player.UnitStatusEventInvoker.Unregister(_player.gameObject.GetInstanceID(), OnPlayersGameOver);
+    }
 
-    private void OnPlayersGameOver(GameObject player, UnitStatusTypes statusType)
+    private void OnPlayersGameOver(GameObject playerObject, UnitStatusTypes statusType)
     {
         if (statusType is UnitStatusTypes.Die)
         {
-            Destroy(_player.gameObject);
+            _sceneEventInvoker.Invoke(ScenesEventsTypes.PlayerDied);
+
+            if (playerObject.TryGetComponent(out Player player))
+            {
+                _pool.Release(player);
+            }
         }
     }
 
