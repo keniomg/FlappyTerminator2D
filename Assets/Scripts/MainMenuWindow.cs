@@ -18,6 +18,7 @@ public class MainMenuWindow : Window
 
     public void OnQuitButtonClicked()
     {
+        SoundInvoker.Invoke(SoundTypes.ButtonClicked);
         Application.Quit();
     }
 }

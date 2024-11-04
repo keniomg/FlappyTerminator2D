@@ -18,7 +18,7 @@ public abstract class Health<UnitAttacker, UnitCollisionHandler> : BaseHealth, I
         base.OnDisable();
     }
 
-    public void TakeDamage(int decreaseValue, LayerMask attacker)
+    public virtual void TakeDamage(int decreaseValue, LayerMask attacker)
     {
         if (Own != attacker)
         {

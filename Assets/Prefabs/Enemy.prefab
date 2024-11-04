@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e0ade98ac800cc45aee14233f899f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _soundEventsInvoker: {fileID: 11400000, guid: 63a9882d913e43345a09f80dcb1655db, type: 2}
   <KillAward>k__BackingField: 5
 --- !u!58 &8034956017069179782
 CircleCollider2D:

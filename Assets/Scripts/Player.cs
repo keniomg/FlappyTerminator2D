@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(PlayerInput), typeof(PlayerMover))]
@@ -16,20 +14,18 @@ public class Player : Unit
     private PlayerStatus _playerStatus;
     private PlayerAnimator _playerAnimator;
     private Rigidbody2D _rigidbody;
+    private PlayerCollisionHandler _playerCollisionHandler;
 
     public PlayerHealth PlayerHealth { get; private set; }
     public UnitStatusEventInvoker UnitStatusEventInvoker { get; private set; }
 
-    private void Awake()
-    {
-        GetComponents();
-        InitializeComponents();
-    }
-
     private void Update()
     {
-        _playerMover.Move();
-        _playerInput.ManageInput();
+        if (Time.timeScale != 0)
+        {
+            _playerMover.Move();
+            _playerInput.ManageInput();
+        }
     }
 
     public void GetComponents()
@@ -43,16 +39,18 @@ public class Player : Unit
         _attackerData = GetComponent<AttackerData>();
         _playerStatus = GetComponent<PlayerStatus>();
         _playerAnimator = GetComponent<PlayerAnimator>();
+        _playerCollisionHandler = GetComponent<PlayerCollisionHandler>();
 
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    public void InitializeComponents()
+    public void InitializeComponents(ScenesEventsInvoker scenesEventsInvoker, SoundEventsInvoker soundEventsInvoker)
     {
         _playerMover.Initialize(_playerInput, _rigidbody, UnitStatusEventInvoker);
-        PlayerHealth.Initialize(UnitStatusEventInvoker);
+        PlayerHealth.Initialize(UnitStatusEventInvoker, scenesEventsInvoker);
         _playerStatus.Initialize(UnitStatusEventInvoker);
         _playerAnimator.Initialize(_playerStatus);
-        _playerProjectileSpawner.Initialize(UnitStatusEventInvoker, _attackerData);
+        _playerProjectileSpawner.Initialize(UnitStatusEventInvoker, _attackerData, soundEventsInvoker);
+        _playerCollisionHandler.Initialize(PlayerHealth.Own, soundEventsInvoker);
     }
 }

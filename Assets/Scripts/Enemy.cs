@@ -22,18 +22,12 @@ public class Enemy : Unit
 
     public UnitStatusEventInvoker UnitStatusEventInvoker { get; private set; }
 
-    private void Awake()
-    {
-        GetComponents();
-        InitializeComponents();
-    }
-
     private void FixedUpdate()
     {
         _enemyMover.Move();
     }
 
-    private void GetComponents()
+    public void GetComponents()
     {
         UnitStatusEventInvoker = ScriptableObject.CreateInstance<UnitStatusEventInvoker>();
 
@@ -47,11 +41,11 @@ public class Enemy : Unit
         _enemyStatus = GetComponent<EnemyStatus>();
     }
 
-    private void InitializeComponents()
+    public void InitializeComponents(SoundEventsInvoker soundEventsInvoker)
     {
         _enemyHealth.Initialize(UnitStatusEventInvoker);
         _enemyStatus.Initialize(UnitStatusEventInvoker);
         _enemyAnimator.Initialize(_enemyStatus);
-        _enemyProjectileSpawner.Initialize(UnitStatusEventInvoker, _attacker);
+        _enemyProjectileSpawner.Initialize(UnitStatusEventInvoker, _attacker, soundEventsInvoker);
     }
 }

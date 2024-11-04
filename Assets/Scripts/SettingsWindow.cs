@@ -1,4 +1,1 @@
-﻿public class SettingsWindow : Window
-{
-
-}
+﻿public class SettingsWindow : Window { }

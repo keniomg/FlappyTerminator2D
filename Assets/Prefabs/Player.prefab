@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f50e4a3c9bbf4194582bd8deb9f30d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _soundEventsInvoker: {fileID: 11400000, guid: 63a9882d913e43345a09f80dcb1655db, type: 2}
 --- !u!114 &-7527072527352613580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,8 +226,8 @@ MonoBehaviour:
   <Own>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
-  _invoker: {fileID: 11400000, guid: 404aa2bd7f5be0445b9bddc4d650f70a, type: 2}
   <MaximumValue>k__BackingField: 100
+  _invoker: {fileID: 11400000, guid: 404aa2bd7f5be0445b9bddc4d650f70a, type: 2}
 --- !u!114 &6836510955709202737
 MonoBehaviour:
   m_ObjectHideFlags: 0

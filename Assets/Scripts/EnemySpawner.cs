@@ -12,6 +12,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private LayerMask _owner;
     [SerializeField] private GeneralCollisionEventInvoker _eventInvoker;
     [SerializeField] private ScoreEventInvoker _scoreInvoker;
+    [SerializeField] private SoundEventsInvoker _soundEventsInvoker;
 
     private Vector2 _moveDirection;
     private WaitForSeconds _delay;
@@ -37,36 +38,38 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(Spawn());
     }
 
-    private void AccompanyGet(Enemy enemyPrefab)
+    private void AccompanyGet(Enemy enemy)
     {
-        enemyPrefab.gameObject.SetActive(true);
-        enemyPrefab.UnitStatusEventInvoker.Register(enemyPrefab.gameObject.GetInstanceID(), OnEnemyHealthChanged);
-        SetPosition(enemyPrefab.gameObject);
+        enemy.gameObject.SetActive(true);
+        enemy.GetComponents();
+        enemy.InitializeComponents(_soundEventsInvoker);
+        enemy.UnitStatusEventInvoker.Register(enemy.gameObject.GetInstanceID(), OnEnemyHealthChanged);
+        SetPosition(enemy.gameObject);
 
-        if (enemyPrefab.gameObject.TryGetComponent(out EnemyMover enemyMover))
+        if (enemy.gameObject.TryGetComponent(out EnemyMover enemyMover))
         {
             enemyMover.Initialize(_moveDirection);
         }
 
-        if (enemyPrefab.gameObject.TryGetComponent(out EnemyCollisionHandler collisionHandler))
+        if (enemy.gameObject.TryGetComponent(out EnemyCollisionHandler collisionHandler))
         {
-            collisionHandler.Initialize(_owner);
-            _eventInvoker.Register(enemyPrefab.gameObject.GetInstanceID(), OnEnemyCollidedSomething);
+            collisionHandler.Initialize(_owner, _soundEventsInvoker);
+            _eventInvoker.Register(enemy.gameObject.GetInstanceID(), OnEnemyCollidedSomething);
         }
     }
 
-    private void AccompanyRelease(Enemy enemyPrefab)
+    private void AccompanyRelease(Enemy enemy)
     {
-        enemyPrefab.gameObject.SetActive(false);
-        enemyPrefab.UnitStatusEventInvoker.Unregister(enemyPrefab.gameObject.GetInstanceID(), OnEnemyHealthChanged);
+        enemy.gameObject.SetActive(false);
+        enemy.UnitStatusEventInvoker.Unregister(enemy.gameObject.GetInstanceID(), OnEnemyHealthChanged);
 
-        if (enemyPrefab.gameObject.TryGetComponent(out EnemyCollisionHandler collisionHandler))
+        if (enemy.gameObject.TryGetComponent(out EnemyCollisionHandler collisionHandler))
         {
-            _eventInvoker.Unregister(enemyPrefab.gameObject.GetInstanceID(), OnEnemyCollidedSomething);
+            _eventInvoker.Unregister(enemy.gameObject.GetInstanceID(), OnEnemyCollidedSomething);
         }
     }
 
-    private void SetPosition(GameObject gameObject)
+    private void SetPosition(GameObject enemyObject)
     {
         const int NumbersOfWidthSide = 2;
         const int NumbersOfHeightSide = 2;
@@ -81,7 +84,7 @@ public class EnemySpawner : MonoBehaviour
         float spawnPositionX = Random.Range(xSpawnPositionOffsetLeft, xSpawnPositionOffsetRight);
         float spawnPositionY = Random.Range(ySpawnPositionOffsetDown, ySpawnPositionOffsetUp);
 
-        gameObject.transform.position = new(spawnPositionX, spawnPositionY);
+        enemyObject.transform.position = new(spawnPositionX, spawnPositionY);
     }
 
     private void OnEnemyCollidedSomething(GameObject enemyObject, GameObject other)

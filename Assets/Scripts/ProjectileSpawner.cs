@@ -10,11 +10,12 @@ public class ProjectileSpawner : MonoBehaviour
     [SerializeField] private int _poolMaximumSize;
     [SerializeField] private Transform _spawnTransform;
     [SerializeField] private GeneralCollisionEventInvoker _collisionEventInvoker;
-
+    
     protected Vector2 Direction;
     protected Coroutine Spawn;
     protected bool IsAttackAvailable;
 
+    private SoundEventsInvoker _soundEventInvoker;
     private const float SecondsInOneSecond = 1;
     private float _spawnDelay;
     private AttackerData _attackerData;
@@ -52,13 +53,14 @@ public class ProjectileSpawner : MonoBehaviour
         _unitStatusEventInvoker.Unregister(gameObject.GetInstanceID(), Attacks);
     }
 
-    public void Initialize(UnitStatusEventInvoker unitStatusEventInvoker, AttackerData attackerData)
+    public void Initialize(UnitStatusEventInvoker unitStatusEventInvoker, AttackerData attackerData, SoundEventsInvoker soundEventsInvoker)
     {
         _unitStatusEventInvoker = unitStatusEventInvoker;
         _attackerData = attackerData;
         _spawnDelay = SecondsInOneSecond / _attackerData.ProjectilesPerSecond;
         _delay = new(_spawnDelay);
         _unitStatusEventInvoker.Register(gameObject.GetInstanceID(), Attacks);
+        _soundEventInvoker = soundEventsInvoker;
     }
 
     private void AccompanyGet(Projectile projectile)
@@ -68,12 +70,14 @@ public class ProjectileSpawner : MonoBehaviour
         SetDefaultVelocityAndRotation(projectile);
         projectile.transform.position = _spawnTransform.position;
         _collisionEventInvoker.Register(projectile.gameObject.GetInstanceID(), OnProjectileCollidedSomething);
+        _soundEventInvoker.Invoke(SoundTypes.ProjectileSpawned);
     }
 
     private void AccompanyRelease(Projectile projectile)
     {
         _collisionEventInvoker.Unregister(projectile.gameObject.GetInstanceID(), OnProjectileCollidedSomething);
         projectile.gameObject.SetActive(false);
+        _soundEventInvoker.Invoke(SoundTypes.ProjectileCollided);
     }
 
     private void OnProjectileCollidedSomething(GameObject projectileObject, GameObject otherObject)

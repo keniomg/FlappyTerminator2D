@@ -7,73 +7,81 @@ public class AudioMaster : MonoBehaviour
     [SerializeField] private AudioMixerGroup _audioMixer;
 
     private bool _isMuteEnabled;
+    private int _volumeMiltiplier;
     private float _muteVolume;
-
-    private event Action<float, Channels> VolumeChanged;
+    private float _masterVolume;
+    private float _musicVolume;
+    private float _sfxVolume;
+    private float _buttonsVolume;
 
     private void Awake()
     {
         _muteVolume = -80;
+        _volumeMiltiplier = 20;
     }
 
-    private void OnEnable()
+    private void Update()
     {
-        VolumeChanged += OnVolumeChanged;
-    }
-
-    private void OnDisable()
-    {
-        VolumeChanged -= OnVolumeChanged;
+        ManageAllSound();
     }
 
     public void MuteAllSound(bool isEnabled)
     {
         _isMuteEnabled = isEnabled;
-        VolumeChanged?.Invoke(_muteVolume, Channels.Master);
     }
 
     public void ChangeMasterVolume(float volume)
     {
-        VolumeChanged?.Invoke(volume, Channels.Master);
+        _masterVolume = volume;
     }
 
     public void ChangeMusicVolume(float volume)
     {
-        VolumeChanged?.Invoke(volume, Channels.Music);
+        _musicVolume = volume;
     }
 
     public void ChangeButtonsVolume(float volume)
     {
-        VolumeChanged?.Invoke(volume, Channels.Buttons);
+        _buttonsVolume = volume;
     }
 
     public void ChangeSfxVolume(float volume)
     {
-        VolumeChanged?.Invoke(volume, Channels.Sfx);
+        _sfxVolume = volume;
     }
 
-    private enum Channels
-    {
-        Master,
-        Music,
-        Buttons,
-        Sfx
-    }
-
-    private void OnVolumeChanged(float volume, Channels channel)
+    private void ManageAllSound()
     {
         if (_isMuteEnabled)
         {
-            _audioMixer.audioMixer.SetFloat(Channels.Master.ToString(), _muteVolume);
+            _audioMixer.audioMixer.SetFloat("Master", _muteVolume);
         }
         else
         {
-            ManageChannelVolume(volume, channel);
+            ManageMasterVolume();
+            ManageMusicVolume();
+            ManageButtonsVolume();
+            ManageSfxVolume();
         }
     }
 
-    private void ManageChannelVolume(float volume, Channels channel)
+    private void ManageMasterVolume()
     {
-        _audioMixer.audioMixer.SetFloat(channel.ToString(), Mathf.Log10(volume) * 20);
+        _audioMixer.audioMixer.SetFloat("Master", Mathf.Log10(_masterVolume) * _volumeMiltiplier);
+    }
+
+    private void ManageMusicVolume()
+    {
+        _audioMixer.audioMixer.SetFloat("Music", Mathf.Log10(_musicVolume) * _volumeMiltiplier);
+    }
+
+    private void ManageButtonsVolume()
+    {
+        _audioMixer.audioMixer.SetFloat("Buttons", Mathf.Log10(_buttonsVolume) * _volumeMiltiplier);
+    }
+    
+    private void ManageSfxVolume()
+    {
+        _audioMixer.audioMixer.SetFloat("Sfx", Mathf.Log10(_sfxVolume) * _volumeMiltiplier);
     }
 }

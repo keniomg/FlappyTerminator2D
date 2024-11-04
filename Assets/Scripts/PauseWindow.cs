@@ -3,9 +3,8 @@ using UnityEngine;
 public class PauseWindow : Window
 {
     [SerializeField] private Window _settings;
-    [SerializeField] private MainMenuWindow _menu;
     [SerializeField] private ScenesEventsInvoker _scenesEventInvoker;
-   
+
     public override void OnCloseWindowButtonClicked()
     {
         base.OnCloseWindowButtonClicked();
@@ -21,6 +20,7 @@ public class PauseWindow : Window
     public void OnRestartButtonClicked()
     {
         _scenesEventInvoker.Invoke(ScenesEventsTypes.GameRestarted);
+        SoundInvoker.Invoke(SoundTypes.ButtonClicked);
     }
 
     public void OnSettingsButtonClicked()
@@ -36,6 +36,7 @@ public class PauseWindow : Window
 
     public void OnQuitButtonClicked()
     {
+        SoundInvoker.Invoke(SoundTypes.ButtonClicked);
         Application.Quit();
     }
 }

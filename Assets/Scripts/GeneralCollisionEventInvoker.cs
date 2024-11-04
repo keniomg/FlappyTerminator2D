@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +6,11 @@ using UnityEngine;
 public class GeneralCollisionEventInvoker : ScriptableObject
 {
     private Dictionary<int, Action<GameObject, GameObject>> _collisionEvents = new Dictionary<int, Action<GameObject, GameObject>>();
+
+    private void OnEnable()
+    {
+        _collisionEvents.Clear();
+    }
 
     public void Register(int ID, Action<GameObject, GameObject> collisionEvent)
     {
