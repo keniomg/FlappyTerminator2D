@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(ProjectileCollisionHandler))]
 
-public class Projectile : MonoBehaviour, IMovable
+public class Projectile : MonoBehaviour
 {
     private float _speed;
     private ProjectileCollisionHandler _handler;

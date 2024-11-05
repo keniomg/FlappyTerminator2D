@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMover : MonoBehaviour, IMovable
+public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private float _jumpForceY;
     [SerializeField] private float _speed;

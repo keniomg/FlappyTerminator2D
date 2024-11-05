@@ -36,7 +36,6 @@ public class PauseWindow : Window
 
     public void OnQuitButtonClicked()
     {
-        SoundInvoker.Invoke(SoundTypes.ButtonClicked);
         Application.Quit();
     }
 }

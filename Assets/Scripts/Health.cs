@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class Health<UnitAttacker, UnitCollisionHandler> : BaseHealth, IDamagable 
+public abstract class Health<UnitAttacker, UnitCollisionHandler> : BaseHealth
     where UnitAttacker : AttackerData 
     where UnitCollisionHandler : BaseCollisionHandler
 {
