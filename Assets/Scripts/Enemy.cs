@@ -18,10 +18,14 @@ public class Enemy : Unit
 
     public UnitStatusEventInvoker UnitStatusEventInvoker { get; private set; }
 
+    private void Update()
+    {
+        _enemyAnimator.HandleAnimation();
+    }
+
     private void FixedUpdate()
     {
         _enemyMover.Move();
-        _enemyAnimator.HandleAnimation();
     }
 
     public void GetComponents()

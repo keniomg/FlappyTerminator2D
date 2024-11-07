@@ -273,7 +273,7 @@ MonoBehaviour:
   <ProjectilesPerSecond>k__BackingField: 5
   <ProjectileSpeed>k__BackingField: 20
   <CollisionDamage>k__BackingField: 50
-  <ProjectileDamage>k__BackingField: 30
+  <ProjectileDamage>k__BackingField: 60
   <AttackOwner>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40018c26db965014faa4cf2af5caa9cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <DyingAnimation>k__BackingField: {fileID: 7400000, guid: 047a8bbafe413234b9442bdaa2c1a24c, type: 2}
 --- !u!95 &6813461716355439895
 Animator:
   serializedVersion: 5

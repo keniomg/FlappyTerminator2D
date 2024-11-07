@@ -24,6 +24,7 @@ public class Player : Unit
         if (Time.timeScale != 0)
         {
             _playerInput.ManageInput();
+            _playerAnimator.HandleAnimation();
         }
     }
 
@@ -32,7 +33,6 @@ public class Player : Unit
         if (Time.timeScale != 0)
         {
             _playerMover.Move();
-            _playerAnimator.HandleAnimation();
         }
     }
 

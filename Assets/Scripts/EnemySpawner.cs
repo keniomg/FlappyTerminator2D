@@ -14,7 +14,9 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private ScoreEventInvoker _scoreInvoker;
     [SerializeField] private SoundEventsInvoker _soundEventsInvoker;
 
+    private Coroutine _dyingCoroutine;
     private Vector2 _moveDirection;
+    private WaitForSeconds _dieAnimationDelay;
     private WaitForSeconds _delay;
     private ObjectPool<Enemy> _pool;
 
@@ -40,11 +42,15 @@ public class EnemySpawner : MonoBehaviour
 
     private void AccompanyGet(Enemy enemy)
     {
-        enemy.gameObject.SetActive(true);
         enemy.GetComponents();
         enemy.InitializeComponents(_soundEventsInvoker);
         enemy.UnitStatusEventInvoker.Register(enemy.gameObject.GetInstanceID(), OnEnemyHealthChanged);
         SetPosition(enemy.gameObject);
+
+        if (enemy.TryGetComponent(out EnemyStatus enemyStatus))
+        {
+            enemyStatus.ResetStatus();
+        }
 
         if (enemy.gameObject.TryGetComponent(out EnemyMover enemyMover))
         {
@@ -54,18 +60,17 @@ public class EnemySpawner : MonoBehaviour
         if (enemy.gameObject.TryGetComponent(out EnemyCollisionHandler collisionHandler))
         {
             collisionHandler.Initialize(_owner, _soundEventsInvoker);
-            _eventInvoker.Register(enemy.gameObject.GetInstanceID(), OnEnemyCollidedSomething);
+            _eventInvoker.Register(enemy.gameObject.GetInstanceID(), OnEnemyCollidedBorder);
         }
     }
 
     private void AccompanyRelease(Enemy enemy)
     {
-        enemy.gameObject.SetActive(false);
         enemy.UnitStatusEventInvoker.Unregister(enemy.gameObject.GetInstanceID(), OnEnemyHealthChanged);
 
         if (enemy.gameObject.TryGetComponent(out EnemyCollisionHandler collisionHandler))
         {
-            _eventInvoker.Unregister(enemy.gameObject.GetInstanceID(), OnEnemyCollidedSomething);
+            _eventInvoker.Unregister(enemy.gameObject.GetInstanceID(), OnEnemyCollidedBorder);
         }
     }
 
@@ -87,7 +92,7 @@ public class EnemySpawner : MonoBehaviour
         enemyObject.transform.position = new(spawnPositionX, spawnPositionY);
     }
 
-    private void OnEnemyCollidedSomething(GameObject enemyObject, GameObject other)
+    private void OnEnemyCollidedBorder(GameObject enemyObject, GameObject other)
     {
         if (enemyObject.TryGetComponent(out Enemy enemy) && other.TryGetComponent(out EnemyBorder enemyBorder))
         {
@@ -101,8 +106,13 @@ public class EnemySpawner : MonoBehaviour
         {
             if (unitStatusType is UnitStatusTypes.Died)
             {
-                _pool.Release(enemy);
                 _scoreInvoker.Invoke(enemy.KillAward);
+
+                if (_dyingCoroutine == null)
+                {
+                    _dyingCoroutine = StartCoroutine(ReleaseOnDestroyed(enemy));
+                }
+                
             }
         }
     }
@@ -114,6 +124,19 @@ public class EnemySpawner : MonoBehaviour
             _pool.Get();
 
             yield return _delay;
+        }
+    }
+
+    private IEnumerator ReleaseOnDestroyed(Enemy enemy)
+    {
+        if (enemy.TryGetComponent(out EnemyAnimator enemyAnimator))
+        {
+            _dieAnimationDelay = new(enemyAnimator.DyingAnimation.length);
+
+            yield return _dieAnimationDelay;
+
+            _pool.Release(enemy);
+            _dyingCoroutine = null;
         }
     }
 }

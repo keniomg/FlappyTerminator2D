@@ -19,6 +19,14 @@ public class UnitStatus : MonoBehaviour
         _statusInvoker.Unregister(gameObject.GetInstanceID(), OnUnitStatusChanged);
     }
 
+    public void ResetStatus()
+    {
+        IsDied = false;
+        IsDamaged = false;
+        IsAttack = false;
+        IsDamaged = false;
+    }
+
     public void Initialize(UnitStatusEventInvoker statusInvoker)
     {
         _statusInvoker = statusInvoker;
@@ -30,36 +38,43 @@ public class UnitStatus : MonoBehaviour
         switch (statusType)
         {
             case UnitStatusTypes.Died:
-                IsDied = true;
+                StartCoroutine(HandleDieStatusEvent());
                 break;
             case UnitStatusTypes.Attack:
-                IsAttack = true;
+                StartCoroutine(HandleAttackStatusEvent());
                 break;
             case UnitStatusTypes.Damaged:
-                IsDamaged = true;
+                StartCoroutine(HandleDamagedStatusEvent());
                 break;
             default:
                 break;
         }
     }
 
-    private void HandleTriggerBoolStatusEvent(ref bool triggerBool)
+    private IEnumerator HandleDieStatusEvent()
     {
-        triggerBool = true;
-        StartCoroutine(ResetTriggerNextFrame(triggerBool));
-    }
+        IsDied = true;
 
-    private IEnumerator ResetTriggerNextFrame(bool triggerBool)
-    {
         yield return null;
-        triggerBool = false;
+
+        //IsDied = false;
     }
 
-    private void ResetStatus()
+    private IEnumerator HandleAttackStatusEvent()
     {
-        IsDied = false;
-        IsDamaged = false;
+        IsAttack = true;
+
+        yield return null;
+
         IsAttack = false;
+    }
+
+    private IEnumerator HandleDamagedStatusEvent()
+    {
+        IsDamaged = true;
+
+        yield return null;
+
         IsDamaged = false;
     }
 }

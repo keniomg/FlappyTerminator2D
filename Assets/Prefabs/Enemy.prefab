@@ -276,6 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c095eb375178df24f998362a998a0747, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <DyingAnimation>k__BackingField: {fileID: 7400000, guid: b4bbdb1a095ad6d4e82f54d313cb3076, type: 2}
 --- !u!95 &2759826612280372025
 Animator:
   serializedVersion: 5

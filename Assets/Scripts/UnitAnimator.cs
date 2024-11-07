@@ -2,6 +2,8 @@ using UnityEngine;
 
 public abstract class UnitAnimator : MonoBehaviour
 {
+    [field: SerializeField] public AnimationClip DyingAnimation {get; private set; }
+
     private Animator _animator;
     private UnitStatus _unitStatus;
 
