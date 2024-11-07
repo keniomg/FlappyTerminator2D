@@ -12,31 +12,31 @@ public class GeneralCollisionEventInvoker : ScriptableObject
         _collisionEvents.Clear();
     }
 
-    public void Register(int ID, Action<GameObject, GameObject> collisionEvent)
+    public void Register(int id, Action<GameObject, GameObject> collisionEvent)
     {
-        if (!_collisionEvents.ContainsKey(ID))
+        if (!_collisionEvents.ContainsKey(id))
         {
-            _collisionEvents[ID] = collisionEvent;
+            _collisionEvents[id] = collisionEvent;
         }
         else
         {
-            _collisionEvents[ID] += collisionEvent;
+            _collisionEvents[id] += collisionEvent;
         }
     }
 
-    public void Unregister(int ID, Action<GameObject, GameObject> collisionEvent)
+    public void Unregister(int id, Action<GameObject, GameObject> collisionEvent)
     {
-        if (_collisionEvents.ContainsKey(ID))
+        if (_collisionEvents.ContainsKey(id))
         {
-            _collisionEvents[ID] -= collisionEvent;
+            _collisionEvents[id] -= collisionEvent;
         }
     }
 
-    public void InvokeEvent(int ID, GameObject firstCollided, GameObject secondCollided)
+    public void InvokeEvent(int id, GameObject firstCollided, GameObject secondCollided)
     {
-        if (_collisionEvents.ContainsKey(ID))
+        if (_collisionEvents.ContainsKey(id))
         {
-            _collisionEvents[ID]?.Invoke(firstCollided, secondCollided);
+            _collisionEvents[id]?.Invoke(firstCollided, secondCollided);
         }
     }
 }

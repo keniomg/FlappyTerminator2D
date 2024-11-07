@@ -14,7 +14,7 @@ public class PauseWindow : Window
     public override void OnOpenWindowButtonClicked()
     {
         base.OnOpenWindowButtonClicked();
-        _scenesEventInvoker.Invoke(ScenesEventsTypes.GamePaused);
+        _scenesEventInvoker.Invoke(ScenesEventsTypes.OpenedPauseMenu);
     }
 
     public void OnRestartButtonClicked()

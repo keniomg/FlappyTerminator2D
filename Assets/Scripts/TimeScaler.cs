@@ -16,8 +16,9 @@ public class TimeScaler : MonoBehaviour
 
     private void OnSceneStatusChanged(ScenesEventsTypes systemEventsType)
     {
-        if (systemEventsType is ScenesEventsTypes.GamePaused || 
-            systemEventsType is ScenesEventsTypes.PlayerDied)
+        if (systemEventsType is ScenesEventsTypes.OpenedPauseMenu || 
+            systemEventsType is ScenesEventsTypes.PlayerDied ||
+            systemEventsType is ScenesEventsTypes.PlayerTouchedPlatform)
         {
             Pause();
         }

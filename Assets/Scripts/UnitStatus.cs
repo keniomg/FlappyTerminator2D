@@ -1,12 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class UnitStatus : MonoBehaviour
 {
     private UnitStatusEventInvoker _statusInvoker;
 
     public bool IsDied { get; private set; }
-    public bool IsJumped { get; private set; }
-    public bool IsAttacked { get; private set; }
+    public bool IsAttack { get; private set; }
     public bool IsDamaged { get; private set; }
 
     private void OnEnable()
@@ -25,40 +25,41 @@ public class UnitStatus : MonoBehaviour
         _statusInvoker.Register(gameObject.GetInstanceID(), OnUnitStatusChanged);
     }
 
-    protected virtual void OnUnitStatusChanged(GameObject changedObject, UnitStatusTypes statusType)
+    private void OnUnitStatusChanged(GameObject changedObject, UnitStatusTypes statusType)
     {
         switch (statusType)
         {
-            case UnitStatusTypes.Die:
-                HandleDieStatusEvent();
+            case UnitStatusTypes.Died:
+                IsDied = true;
                 break;
             case UnitStatusTypes.Attack:
-                HandleTriggerStatusEvent(IsAttacked);
+                IsAttack = true;
                 break;
-            case UnitStatusTypes.Damage:
-                HandleTriggerStatusEvent(IsDamaged);
+            case UnitStatusTypes.Damaged:
+                IsDamaged = true;
                 break;
             default:
                 break;
         }
     }
 
-    protected virtual void HandleDieStatusEvent()
+    private void HandleTriggerBoolStatusEvent(ref bool triggerBool)
     {
-        IsDied = true;
+        triggerBool = true;
+        StartCoroutine(ResetTriggerNextFrame(triggerBool));
     }
 
-    protected virtual void HandleTriggerStatusEvent(bool trigger)
+    private IEnumerator ResetTriggerNextFrame(bool triggerBool)
     {
-        trigger = true;
-        trigger = false;
+        yield return null;
+        triggerBool = false;
     }
 
     private void ResetStatus()
     {
         IsDied = false;
         IsDamaged = false;
-        IsAttacked = false;
+        IsAttack = false;
         IsDamaged = false;
     }
 }

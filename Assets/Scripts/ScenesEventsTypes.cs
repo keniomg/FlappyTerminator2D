@@ -2,7 +2,7 @@
 {
     PlayerDied,
     PlayerTouchedPlatform,
-    GamePaused,
+    OpenedPauseMenu,
     GameContinued,
     GameRestarted,
     GameStarted,

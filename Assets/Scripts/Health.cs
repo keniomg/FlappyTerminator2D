@@ -26,11 +26,11 @@ public abstract class Health<UnitAttacker, UnitCollisionHandler> : BaseHealth
 
             if (CurrentValue != 0)
             {
-                UnitStatusEventInvoker.Invoke(gameObject.GetInstanceID(), gameObject, UnitStatusTypes.Damage);
+                UnitStatusEventInvoker.Invoke(gameObject.GetInstanceID(), gameObject, UnitStatusTypes.Damaged);
             }
             else
             {
-                UnitStatusEventInvoker.Invoke(gameObject.GetInstanceID(), gameObject, UnitStatusTypes.Die);
+                UnitStatusEventInvoker.Invoke(gameObject.GetInstanceID(), gameObject, UnitStatusTypes.Died);
             }
 
             InvokeValueChangedEvent();

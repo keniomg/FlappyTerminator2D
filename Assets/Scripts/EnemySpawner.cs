@@ -99,7 +99,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (enemyObject.TryGetComponent(out Enemy enemy))
         {
-            if (unitStatusType is UnitStatusTypes.Die)
+            if (unitStatusType is UnitStatusTypes.Died)
             {
                 _pool.Release(enemy);
                 _scoreInvoker.Invoke(enemy.KillAward);

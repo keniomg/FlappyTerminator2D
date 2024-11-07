@@ -10,7 +10,12 @@ public abstract class UnitAnimator : MonoBehaviour
         _animator = TryGetComponent(out Animator animator) ? animator : null;
     }
 
-    public abstract void HandleAnimation();
+    public void HandleAnimation()
+    {
+        _animator.SetBool(UnitStatusTypes.Attack.ToString(), _unitStatus.IsAttack);
+        _animator.SetBool(UnitStatusTypes.Damaged.ToString(), _unitStatus.IsDamaged);
+        _animator.SetBool(UnitStatusTypes.Died.ToString(), _unitStatus.IsDied);
+    }
 
     public void Initialize(UnitStatus unitStatus)
     {

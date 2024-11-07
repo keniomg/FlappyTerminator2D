@@ -23,8 +23,16 @@ public class Player : Unit
     {
         if (Time.timeScale != 0)
         {
-            _playerMover.Move();
             _playerInput.ManageInput();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (Time.timeScale != 0)
+        {
+            _playerMover.Move();
+            _playerAnimator.HandleAnimation();
         }
     }
 

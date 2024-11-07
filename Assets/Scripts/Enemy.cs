@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMover), typeof(EnemyCollisionHandler), typeof(EnemyProjectileSpawner))]
@@ -11,9 +9,7 @@ public class Enemy : Unit
 {
     private EnemyMover _enemyMover;
     private EnemyHealth _enemyHealth;
-    private EnemyCollisionHandler _enemyCollisionHandler;
     private EnemyProjectileSpawner _enemyProjectileSpawner;
-    private Rigidbody2D _rigidbody;
     private AttackerData _attacker;
     private EnemyStatus _enemyStatus;
     private EnemyAnimator _enemyAnimator;
@@ -25,6 +21,7 @@ public class Enemy : Unit
     private void FixedUpdate()
     {
         _enemyMover.Move();
+        _enemyAnimator.HandleAnimation();
     }
 
     public void GetComponents()
@@ -33,9 +30,7 @@ public class Enemy : Unit
 
         _enemyMover = GetComponent<EnemyMover>();
         _enemyHealth = GetComponent<EnemyHealth>();
-        _enemyCollisionHandler = GetComponent<EnemyCollisionHandler>();
         _enemyProjectileSpawner = GetComponent<EnemyProjectileSpawner>();
-        _rigidbody = GetComponent<Rigidbody2D>();
         _attacker = GetComponent<AttackerData>();
         _enemyAnimator = GetComponent<EnemyAnimator>();
         _enemyStatus = GetComponent<EnemyStatus>();

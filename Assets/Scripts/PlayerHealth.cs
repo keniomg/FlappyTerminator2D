@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerHealth : Health<AttackerData, EnemyCollisionHandler> 
 {
-
     private ScenesEventsInvoker _scenesEventInvoker;
 
     public void ResetValue()

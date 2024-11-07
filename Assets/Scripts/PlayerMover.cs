@@ -48,6 +48,5 @@ public class PlayerMover : MonoBehaviour
         Vector2 jumpForce = new(jumpForceX, _jumpForceY);
         transform.rotation = _maximumRotation;
         _rigidbody.velocity = jumpForce;
-        _unitStatusEventInvoker.Invoke(gameObject.GetInstanceID(), gameObject, UnitStatusTypes.Jump);
     }
 }
