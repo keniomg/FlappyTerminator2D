@@ -47,11 +47,6 @@ public class EnemySpawner : MonoBehaviour
         enemy.UnitStatusEventInvoker.Register(enemy.gameObject.GetInstanceID(), OnEnemyHealthChanged);
         SetPosition(enemy.gameObject);
 
-        if (enemy.TryGetComponent(out EnemyStatus enemyStatus))
-        {
-            enemyStatus.ResetStatus();
-        }
-
         if (enemy.gameObject.TryGetComponent(out EnemyMover enemyMover))
         {
             enemyMover.Initialize(_moveDirection);
@@ -62,6 +57,8 @@ public class EnemySpawner : MonoBehaviour
             collisionHandler.Initialize(_owner, _soundEventsInvoker);
             _eventInvoker.Register(enemy.gameObject.GetInstanceID(), OnEnemyCollidedBorder);
         }
+
+        enemy.gameObject.SetActive(true);
     }
 
     private void AccompanyRelease(Enemy enemy)
@@ -72,6 +69,8 @@ public class EnemySpawner : MonoBehaviour
         {
             _eventInvoker.Unregister(enemy.gameObject.GetInstanceID(), OnEnemyCollidedBorder);
         }
+
+        enemy.gameObject.SetActive(false);
     }
 
     private void SetPosition(GameObject enemyObject)

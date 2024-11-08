@@ -10,6 +10,12 @@ public abstract class UnitAnimator : MonoBehaviour
     private void Awake()
     {
         _animator = TryGetComponent(out Animator animator) ? animator : null;
+        _animator.keepAnimatorStateOnDisable = true;
+    }
+
+    private void OnEnable()
+    {
+        ResetAnimation();
     }
 
     public void HandleAnimation()
@@ -22,5 +28,12 @@ public abstract class UnitAnimator : MonoBehaviour
     public void Initialize(UnitStatus unitStatus)
     {
         _unitStatus = unitStatus;
+    }
+
+    public void ResetAnimation()
+    {
+        _animator.SetBool(UnitStatusTypes.Attack.ToString(), false);
+        _animator.SetBool(UnitStatusTypes.Damaged.ToString(), false);
+        _animator.SetBool(UnitStatusTypes.Died.ToString(), false);
     }
 }

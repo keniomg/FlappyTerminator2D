@@ -4,6 +4,11 @@ public class TimeScaler : MonoBehaviour
 {
     [SerializeField] private ScenesEventsInvoker _scenesEventInvoker;
 
+    private void Awake()
+    {
+        Play();
+    }
+
     private void OnEnable()
     {
         _scenesEventInvoker.SceneStatusChanged += OnSceneStatusChanged;

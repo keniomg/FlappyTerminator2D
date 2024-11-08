@@ -24,7 +24,6 @@ public class UnitStatus : MonoBehaviour
         IsDied = false;
         IsDamaged = false;
         IsAttack = false;
-        IsDamaged = false;
     }
 
     public void Initialize(UnitStatusEventInvoker statusInvoker)
@@ -38,7 +37,7 @@ public class UnitStatus : MonoBehaviour
         switch (statusType)
         {
             case UnitStatusTypes.Died:
-                StartCoroutine(HandleDieStatusEvent());
+                HandleDieStatusEvent();
                 break;
             case UnitStatusTypes.Attack:
                 StartCoroutine(HandleAttackStatusEvent());
@@ -51,13 +50,9 @@ public class UnitStatus : MonoBehaviour
         }
     }
 
-    private IEnumerator HandleDieStatusEvent()
+    private void HandleDieStatusEvent()
     {
         IsDied = true;
-
-        yield return null;
-
-        //IsDied = false;
     }
 
     private IEnumerator HandleAttackStatusEvent()
