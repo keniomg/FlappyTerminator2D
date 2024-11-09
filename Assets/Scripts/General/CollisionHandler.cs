@@ -6,12 +6,19 @@ public class CollisionHandler<UnitType, Border> : BaseCollisionHandler where Uni
     [SerializeField] private GeneralCollisionEventInvoker _collisionEventInvoker;
 
     private SoundEventsInvoker _soundEventsInvoker;
+    private UnitStatusEventInvoker _unitStatusEventInvoker;
 
     public event Action<GameObject, GameObject> Collided;
+
+    private void OnEnable()
+    {
+        HandleRaised();
+    }
 
     private void OnDisable()
     {
         _collisionEventInvoker.Unregister(gameObject.GetInstanceID(), Collided);
+        _unitStatusEventInvoker.Unregister(gameObject.GetInstanceID(), OnUnitStatusChanged);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -27,10 +34,40 @@ public class CollisionHandler<UnitType, Border> : BaseCollisionHandler where Uni
         }
     }
 
-    public void Initialize(LayerMask owner, SoundEventsInvoker soundEventsInvoker)
+    public void Initialize(LayerMask owner, SoundEventsInvoker soundEventsInvoker, UnitStatusEventInvoker unitStatusEventInvoker)
     {
         Owner = owner;
         _collisionEventInvoker.Register(gameObject.GetInstanceID(), Collided);
         _soundEventsInvoker = soundEventsInvoker;
+        _unitStatusEventInvoker = unitStatusEventInvoker;
+        _unitStatusEventInvoker.Register(gameObject.GetInstanceID(), OnUnitStatusChanged);
+    }
+
+    private void OnUnitStatusChanged(GameObject changedObject, UnitStatusTypes unitStatusType)
+    {
+        switch (unitStatusType)
+        {
+            case UnitStatusTypes.Died:
+                HandleDied();
+                break;
+            default: 
+                break;
+        }
+    }
+
+    private void HandleDied()
+    {
+        if (gameObject.TryGetComponent(out Collider2D collder))
+        {
+            collder.enabled = false;
+        }
+    }
+
+    private void HandleRaised()
+    {
+        if (gameObject.TryGetComponent(out Collider2D collder))
+        {
+            collder.enabled = true;
+        }
     }
 }

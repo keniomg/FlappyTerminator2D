@@ -14,7 +14,6 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private ScoreEventInvoker _scoreInvoker;
     [SerializeField] private SoundEventsInvoker _soundEventsInvoker;
 
-    private Coroutine _dyingCoroutine;
     private Vector2 _moveDirection;
     private WaitForSeconds _dieAnimationDelay;
     private WaitForSeconds _delay;
@@ -46,17 +45,7 @@ public class EnemySpawner : MonoBehaviour
         enemy.InitializeComponents(_soundEventsInvoker);
         enemy.UnitStatusEventInvoker.Register(enemy.gameObject.GetInstanceID(), OnEnemyHealthChanged);
         SetPosition(enemy.gameObject);
-
-        if (enemy.gameObject.TryGetComponent(out EnemyMover enemyMover))
-        {
-            enemyMover.Initialize(_moveDirection);
-        }
-
-        if (enemy.gameObject.TryGetComponent(out EnemyCollisionHandler collisionHandler))
-        {
-            collisionHandler.Initialize(_owner, _soundEventsInvoker);
-            _eventInvoker.Register(enemy.gameObject.GetInstanceID(), OnEnemyCollidedBorder);
-        }
+        InitializeEnemyComponents(enemy);
 
         enemy.gameObject.SetActive(true);
     }
@@ -73,19 +62,29 @@ public class EnemySpawner : MonoBehaviour
         enemy.gameObject.SetActive(false);
     }
 
+    private void InitializeEnemyComponents(Enemy enemy)
+    {
+        if (enemy.gameObject.TryGetComponent(out EnemyMover enemyMover))
+        {
+            enemyMover.Initialize(_moveDirection);
+        }
+
+        if (enemy.gameObject.TryGetComponent(out EnemyCollisionHandler collisionHandler))
+        {
+            collisionHandler.Initialize(_owner, _soundEventsInvoker, enemy.UnitStatusEventInvoker);
+            _eventInvoker.Register(enemy.gameObject.GetInstanceID(), OnEnemyCollidedBorder);
+        }
+    }
+
     private void SetPosition(GameObject enemyObject)
     {
-        const int NumbersOfWidthSide = 2;
         const int NumbersOfHeightSide = 2;
 
-        float xSpawnPositionLength = _spawnZone.transform.localScale.x / NumbersOfWidthSide;
         float ySpawnPositionLength = _spawnZone.transform.localScale.y / NumbersOfHeightSide;
-        float xSpawnPositionOffsetLeft = _spawnZone.transform.position.x - xSpawnPositionLength;
-        float xSpawnPositionOffsetRight = _spawnZone.transform.position.x + xSpawnPositionLength;
         float ySpawnPositionOffsetDown = _spawnZone.transform.position.y - ySpawnPositionLength;
         float ySpawnPositionOffsetUp = _spawnZone.transform.position.y + ySpawnPositionLength;
 
-        float spawnPositionX = Random.Range(xSpawnPositionOffsetLeft, xSpawnPositionOffsetRight);
+        float spawnPositionX = _spawnZone.transform.position.x;
         float spawnPositionY = Random.Range(ySpawnPositionOffsetDown, ySpawnPositionOffsetUp);
 
         enemyObject.transform.position = new(spawnPositionX, spawnPositionY);
@@ -106,11 +105,7 @@ public class EnemySpawner : MonoBehaviour
             if (unitStatusType is UnitStatusTypes.Died)
             {
                 _scoreInvoker.Invoke(enemy.KillAward);
-
-                if (_dyingCoroutine == null)
-                {
-                    _dyingCoroutine = StartCoroutine(ReleaseOnDestroyed(enemy));
-                }
+                StartCoroutine(ReleaseOnDestroyed(enemy));
             }
         }
     }
@@ -134,7 +129,6 @@ public class EnemySpawner : MonoBehaviour
             yield return _dieAnimationDelay;
 
             _pool.Release(enemy);
-            _dyingCoroutine = null;
         }
     }
 }

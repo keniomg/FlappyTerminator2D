@@ -14,12 +14,12 @@ public class ProjectileSpawner : MonoBehaviour
     protected Vector2 Direction;
     protected Coroutine Spawn;
     protected bool IsAttackAvailable;
+    protected UnitStatusEventInvoker UnitStatusEventInvoker;
 
     private SoundEventsInvoker _soundEventInvoker;
     private const float SecondsInOneSecond = 1;
     private float _spawnDelay;
     private AttackerData _attackerData;
-    private UnitStatusEventInvoker _unitStatusEventInvoker;
     private WaitForSeconds _delay;
     private ObjectPool<Projectile> _pool;
 
@@ -50,16 +50,18 @@ public class ProjectileSpawner : MonoBehaviour
 
     private void OnDisable()
     {
-        _unitStatusEventInvoker.Unregister(gameObject.GetInstanceID(), Attacks);
+        UnitStatusEventInvoker.Unregister(gameObject.GetInstanceID(), Attacks);
+        UnitStatusEventInvoker.Unregister(gameObject.GetInstanceID(), OnUnitStatusChanged);
     }
 
     public void Initialize(UnitStatusEventInvoker unitStatusEventInvoker, AttackerData attackerData, SoundEventsInvoker soundEventsInvoker)
     {
-        _unitStatusEventInvoker = unitStatusEventInvoker;
+        UnitStatusEventInvoker = unitStatusEventInvoker;
         _attackerData = attackerData;
         _spawnDelay = SecondsInOneSecond / _attackerData.ProjectilesPerSecond;
         _delay = new(_spawnDelay);
-        _unitStatusEventInvoker.Register(gameObject.GetInstanceID(), Attacks);
+        UnitStatusEventInvoker.Register(gameObject.GetInstanceID(), Attacks);
+        UnitStatusEventInvoker.Register(gameObject.GetInstanceID(), OnUnitStatusChanged);
         _soundEventInvoker = soundEventsInvoker;
     }
 
@@ -101,10 +103,22 @@ public class ProjectileSpawner : MonoBehaviour
     private IEnumerator SpawnProjectile()
     {
         _pool.Get();
-        _unitStatusEventInvoker.Invoke(gameObject.GetInstanceID(), gameObject, UnitStatusTypes.Attack);
+        UnitStatusEventInvoker.Invoke(gameObject.GetInstanceID(), gameObject, UnitStatusTypes.Attack);
 
         yield return _delay;
 
         Spawn = null;
+    }
+
+    private void OnUnitStatusChanged(GameObject changedObject, UnitStatusTypes unitStatusType)
+    {
+        switch (unitStatusType)
+        {
+            case UnitStatusTypes.Died:
+                IsAttackAvailable = false;
+                break;
+            default:
+                break;
+        }
     }
 }

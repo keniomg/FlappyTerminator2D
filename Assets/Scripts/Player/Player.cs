@@ -59,6 +59,6 @@ public class Player : Unit
         _playerStatus.Initialize(UnitStatusEventInvoker);
         _playerAnimator.Initialize(_playerStatus);
         _playerProjectileSpawner.Initialize(UnitStatusEventInvoker, _attackerData, soundEventsInvoker);
-        _playerCollisionHandler.Initialize(PlayerHealth.Own, soundEventsInvoker);
+        _playerCollisionHandler.Initialize(PlayerHealth.Own, soundEventsInvoker, UnitStatusEventInvoker);
     }
 }

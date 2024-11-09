@@ -42,6 +42,7 @@ public class EnemyProjectileSpawner : ProjectileSpawner
         while (currentAttackTime < _maximumAttackTime)
         {
             currentAttackTime += Time.deltaTime;
+
             yield return Time.deltaTime;
         }
 
