@@ -111,7 +111,6 @@ public class EnemySpawner : MonoBehaviour
                 {
                     _dyingCoroutine = StartCoroutine(ReleaseOnDestroyed(enemy));
                 }
-                
             }
         }
     }

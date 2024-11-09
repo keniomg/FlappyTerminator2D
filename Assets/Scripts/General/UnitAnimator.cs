@@ -13,7 +13,7 @@ public abstract class UnitAnimator : MonoBehaviour
         _animator.keepAnimatorStateOnDisable = true;
     }
 
-    private void OnEnable()
+    private void OnDisable()
     {
         ResetAnimation();
     }
