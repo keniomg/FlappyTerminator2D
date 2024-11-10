@@ -38,8 +38,6 @@ public class SoundPlayer : MonoBehaviour
             case SoundTypes.ButtonClicked: 
                 _buttonClicked.Play(); 
                 break;
-            default:
-                break;
         }
     }
 }

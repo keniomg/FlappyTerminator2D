@@ -4,11 +4,6 @@ public class PlayerProjectileSpawner : ProjectileSpawner
 {
     private PlayerInput _playerInput;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
     protected override void FixedUpdate()
     {
         IsAttackAvailable = _playerInput.IsAttackKeyHold;
@@ -19,11 +14,8 @@ public class PlayerProjectileSpawner : ProjectileSpawner
         base.FixedUpdate();
     }
 
-    private void Start()
+    public void InitializeInput(PlayerInput playerInput)
     {
-        if (TryGetComponent(out PlayerInput playerInput))
-        {
-            _playerInput = playerInput;
-        }
+        _playerInput = playerInput;
     }
 }

@@ -8,7 +8,6 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float _minimumRotationZ;
     [SerializeField] private float _maximumRotationZ;
 
-    private UnitStatusEventInvoker _unitStatusEventInvoker;
     private PlayerInput _input;
     private Rigidbody2D _rigidbody;
     private Quaternion _minimumRotation;
@@ -25,12 +24,11 @@ public class PlayerMover : MonoBehaviour
         _input.JumpKeyPressed -= Jump;
     }
 
-    public void Initialize(PlayerInput playerInput, Rigidbody2D rigidbody, UnitStatusEventInvoker unitStatusEventInvoker)
+    public void Initialize(PlayerInput playerInput, Rigidbody2D rigidbody)
     {
         _input = playerInput;
         _input.JumpKeyPressed += Jump;
         _rigidbody = rigidbody;
-        _unitStatusEventInvoker = unitStatusEventInvoker;
     }
 
     public void Move()

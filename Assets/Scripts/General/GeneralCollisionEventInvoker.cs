@@ -14,7 +14,7 @@ public class GeneralCollisionEventInvoker : ScriptableObject
 
     public void Register(int id, Action<GameObject, GameObject> collisionEvent)
     {
-        if (!_collisionEvents.ContainsKey(id))
+        if (_collisionEvents.ContainsKey(id) == false)
         {
             _collisionEvents[id] = collisionEvent;
         }

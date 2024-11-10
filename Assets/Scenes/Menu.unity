@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 180458507}
   - component: {fileID: 180458508}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: Mute
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -335,19 +335,7 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1847870083}
-        m_TargetAssemblyTypeName: AudioMaster, Assembly-CSharp
-        m_MethodName: MuteAllSound
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
   m_IsOn: 0
 --- !u!1 &239169917
 GameObject:
@@ -1906,6 +1894,7 @@ GameObject:
   - component: {fileID: 695409398}
   - component: {fileID: 695409397}
   - component: {fileID: 695409396}
+  - component: {fileID: 695409399}
   m_Layer: 5
   m_Name: Settings Button
   m_TagString: Untagged
@@ -1976,19 +1965,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 695409397}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 856147000}
-        m_TargetAssemblyTypeName: MainMenuWindow, Assembly-CSharp
-        m_MethodName: OnSettingsButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &695409397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2027,6 +2004,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 695409394}
   m_CullTransparentMesh: 1
+--- !u!114 &695409399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695409394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad37904606cfa9a4fb74a2e6a446981b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetWindow: {fileID: 1847870084}
+  _button: {fileID: 695409396}
 --- !u!1 &732957210
 GameObject:
   m_ObjectHideFlags: 0
@@ -2639,8 +2630,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SoundInvoker: {fileID: 11400000, guid: 63a9882d913e43345a09f80dcb1655db, type: 2}
-  _settings: {fileID: 1847870084}
   _scenesEventInvoker: {fileID: 11400000, guid: 5d6b584ce9a39804f8d20f15fb9e4598, type: 2}
+  _playButton: {fileID: 907832497}
+  _quitButton: {fileID: 2018730242}
 --- !u!1 &882311945
 GameObject:
   m_ObjectHideFlags: 0
@@ -2806,19 +2798,7 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1847870083}
-        m_TargetAssemblyTypeName: AudioMaster, Assembly-CSharp
-        m_MethodName: ChangeSfxVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &907832495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2901,19 +2881,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 907832498}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 856147000}
-        m_TargetAssemblyTypeName: MainMenuWindow, Assembly-CSharp
-        m_MethodName: OnPlayButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &907832498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3340,19 +3308,7 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1847870083}
-        m_TargetAssemblyTypeName: AudioMaster, Assembly-CSharp
-        m_MethodName: ChangeMasterVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1049553574
 GameObject:
   m_ObjectHideFlags: 0
@@ -4104,19 +4060,7 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1847870083}
-        m_TargetAssemblyTypeName: AudioMaster, Assembly-CSharp
-        m_MethodName: ChangeButtonsVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1799434292
 GameObject:
   m_ObjectHideFlags: 0
@@ -4241,6 +4185,7 @@ GameObject:
   - component: {fileID: 1847870085}
   - component: {fileID: 1847870084}
   - component: {fileID: 1847870083}
+  - component: {fileID: 1847870087}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -4286,6 +4231,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioMixer: {fileID: 24300002, guid: 8ecb2071f7296314fb90364e161e24b3, type: 2}
+  _allSound: {fileID: 1049357127}
+  _music: {fileID: 1936448976}
+  _buttons: {fileID: 1574929776}
+  _sfx: {fileID: 907152340}
+  _mute: {fileID: 180458508}
 --- !u!114 &1847870084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4337,6 +4287,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1847870081}
   m_CullTransparentMesh: 1
+--- !u!114 &1847870087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847870081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfac9eb8ae889c84ebe0690afeb568fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetWindow: {fileID: 1847870084}
+  _button: {fileID: 1943720632}
 --- !u!1 &1849928957
 GameObject:
   m_ObjectHideFlags: 0
@@ -4808,19 +4772,7 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1847870083}
-        m_TargetAssemblyTypeName: AudioMaster, Assembly-CSharp
-        m_MethodName: ChangeMusicVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1943720630
 GameObject:
   m_ObjectHideFlags: 0
@@ -4903,19 +4855,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1943720633}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1847870084}
-        m_TargetAssemblyTypeName: Window, Assembly-CSharp
-        m_MethodName: OnCloseWindowButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1943720633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5247,19 +5187,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2018730243}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 856147000}
-        m_TargetAssemblyTypeName: MainMenuWindow, Assembly-CSharp
-        m_MethodName: OnQuitButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2018730243
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SceneEventsUIController : MonoBehaviour
+public class SceneEventsUIContainer : MonoBehaviour
 {
     [SerializeField] private ScenesEventsInvoker _eventsInvoker;
     [SerializeField] private GameObject[] _disablingOnGameInterrupted;
@@ -29,8 +29,6 @@ public class SceneEventsUIController : MonoBehaviour
             case ScenesEventsTypes.GameStarted:
                 DisableElements(_enablingOnGameInterrupted);
                 EnableElements(_disablingOnGameInterrupted);
-                break;
-            default:
                 break;
         }
     }

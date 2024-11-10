@@ -54,11 +54,12 @@ public class Player : Unit
 
     public void InitializeComponents(ScenesEventsInvoker scenesEventsInvoker, SoundEventsInvoker soundEventsInvoker)
     {
-        _playerMover.Initialize(_playerInput, _rigidbody, UnitStatusEventInvoker);
+        _playerMover.Initialize(_playerInput, _rigidbody);
         PlayerHealth.Initialize(UnitStatusEventInvoker, scenesEventsInvoker);
         _playerStatus.Initialize(UnitStatusEventInvoker);
         _playerAnimator.Initialize(_playerStatus);
         _playerProjectileSpawner.Initialize(UnitStatusEventInvoker, _attackerData, soundEventsInvoker);
+        _playerProjectileSpawner.InitializeInput(_playerInput);
         _playerCollisionHandler.Initialize(PlayerHealth.Own, soundEventsInvoker, UnitStatusEventInvoker);
     }
 }

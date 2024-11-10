@@ -1,10 +1,16 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class AudioMaster : MonoBehaviour
 {
     [SerializeField] private AudioMixerGroup _audioMixer;
+    [SerializeField] private Slider _allSound;
+    [SerializeField] private Slider _music;
+    [SerializeField] private Slider _buttons;
+    [SerializeField] private Slider _sfx;
+    [SerializeField] private Toggle _mute;
 
     private bool _isMuteEnabled;
     private int _volumeMiltiplier;
@@ -20,34 +26,26 @@ public class AudioMaster : MonoBehaviour
         _volumeMiltiplier = 20;
     }
 
+    private void OnEnable()
+    {
+        _allSound.onValueChanged.AddListener(ChangeMasterVolume);
+        _music.onValueChanged.AddListener(ChangeMusicVolume);
+        _buttons.onValueChanged.AddListener(ChangeButtonsVolume);
+        _sfx.onValueChanged.AddListener(ChangeSfxVolume);
+        _mute.onValueChanged.AddListener(MuteAllSound);
+    }
+
+    private void OnDisable()
+    {
+        _allSound.onValueChanged.RemoveListener(ChangeMasterVolume);
+        _music.onValueChanged.RemoveListener(ChangeMusicVolume);
+        _buttons.onValueChanged.RemoveListener(ChangeButtonsVolume);
+        _sfx.onValueChanged.RemoveListener(ChangeSfxVolume);
+    }
+
     private void Update()
     {
         ManageAllSound();
-    }
-
-    public void MuteAllSound(bool isEnabled)
-    {
-        _isMuteEnabled = isEnabled;
-    }
-
-    public void ChangeMasterVolume(float volume)
-    {
-        _masterVolume = volume;
-    }
-
-    public void ChangeMusicVolume(float volume)
-    {
-        _musicVolume = volume;
-    }
-
-    public void ChangeButtonsVolume(float volume)
-    {
-        _buttonsVolume = volume;
-    }
-
-    public void ChangeSfxVolume(float volume)
-    {
-        _sfxVolume = volume;
     }
 
     private void ManageAllSound()
@@ -63,6 +61,31 @@ public class AudioMaster : MonoBehaviour
             ManageButtonsVolume();
             ManageSfxVolume();
         }
+    }
+
+    private void MuteAllSound(bool isEnabled)
+    {
+        _isMuteEnabled = isEnabled;
+    }
+
+    private void ChangeMasterVolume(float volume)
+    {
+        _masterVolume = volume;
+    }
+
+    private void ChangeMusicVolume(float volume)
+    {
+        _musicVolume = volume;
+    }
+
+    private void ChangeButtonsVolume(float volume)
+    {
+        _buttonsVolume = volume;
+    }
+
+    private void ChangeSfxVolume(float volume)
+    {
+        _sfxVolume = volume;
     }
 
     private void ManageMasterVolume()

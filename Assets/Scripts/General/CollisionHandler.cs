@@ -45,13 +45,9 @@ public class CollisionHandler<UnitType, Border> : BaseCollisionHandler where Uni
 
     private void OnUnitStatusChanged(GameObject changedObject, UnitStatusTypes unitStatusType)
     {
-        switch (unitStatusType)
+        if (unitStatusType is UnitStatusTypes.Died)
         {
-            case UnitStatusTypes.Died:
-                HandleDied();
-                break;
-            default: 
-                break;
+            HandleDied();
         }
     }
 

@@ -794,8 +794,9 @@ GameObject:
   - component: {fileID: 171180063}
   - component: {fileID: 171180062}
   - component: {fileID: 171180061}
+  - component: {fileID: 171180064}
   m_Layer: 5
-  m_Name: DeathWindow
+  m_Name: RestartWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -836,6 +837,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SoundInvoker: {fileID: 11400000, guid: 63a9882d913e43345a09f80dcb1655db, type: 2}
   _scenesEventsInvoker: {fileID: 11400000, guid: 5d6b584ce9a39804f8d20f15fb9e4598, type: 2}
+  _restartButton: {fileID: 1982339175}
+  _quitButton: {fileID: 1954567198}
 --- !u!114 &171180062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -874,6 +877,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171180059}
   m_CullTransparentMesh: 1
+--- !u!114 &171180064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171180059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfac9eb8ae889c84ebe0690afeb568fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetWindow: {fileID: 171180061}
+  _button: {fileID: 1982339175}
 --- !u!1 &197013316
 GameObject:
   m_ObjectHideFlags: 0
@@ -2903,6 +2920,7 @@ GameObject:
   - component: {fileID: 503142344}
   - component: {fileID: 503142343}
   - component: {fileID: 503142342}
+  - component: {fileID: 503142345}
   m_Layer: 5
   m_Name: Pause Button
   m_TagString: Untagged
@@ -2973,19 +2991,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 503142343}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 856147000}
-        m_TargetAssemblyTypeName: PauseWindow, Assembly-CSharp
-        m_MethodName: OnOpenWindowButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &503142343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3024,6 +3030,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 503142340}
   m_CullTransparentMesh: 1
+--- !u!114 &503142345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503142340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad37904606cfa9a4fb74a2e6a446981b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetWindow: {fileID: 856147000}
+  _button: {fileID: 503142342}
 --- !u!1 &513132920
 GameObject:
   m_ObjectHideFlags: 0
@@ -3782,19 +3802,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 592386081}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 856147000}
-        m_TargetAssemblyTypeName: PauseWindow, Assembly-CSharp
-        m_MethodName: OnMainMenuButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &592386081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4146,19 +4154,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 695409397}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 856147000}
-        m_TargetAssemblyTypeName: PauseWindow, Assembly-CSharp
-        m_MethodName: OnSettingsButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &695409397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4756,6 +4752,7 @@ GameObject:
   - component: {fileID: 856146999}
   - component: {fileID: 856146998}
   - component: {fileID: 856147000}
+  - component: {fileID: 856147001}
   m_Layer: 5
   m_Name: Pause Panel
   m_TagString: Untagged
@@ -4839,7 +4836,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SoundInvoker: {fileID: 11400000, guid: 63a9882d913e43345a09f80dcb1655db, type: 2}
   _settings: {fileID: 1431372152}
-  _scenesEventInvoker: {fileID: 11400000, guid: 5d6b584ce9a39804f8d20f15fb9e4598, type: 2}
+  _scenesEventsInvoker: {fileID: 11400000, guid: 5d6b584ce9a39804f8d20f15fb9e4598, type: 2}
+  _restartButton: {fileID: 1883726161}
+  _settingsButton: {fileID: 695409396}
+  _mainMenuButton: {fileID: 592386080}
+  _quitButton: {fileID: 2018730242}
+--- !u!114 &856147001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856146996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfac9eb8ae889c84ebe0690afeb568fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetWindow: {fileID: 856147000}
+  _button: {fileID: 907832497}
 --- !u!1 &858791811
 GameObject:
   m_ObjectHideFlags: 0
@@ -5036,19 +5051,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 907832498}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 856147000}
-        m_TargetAssemblyTypeName: PauseWindow, Assembly-CSharp
-        m_MethodName: OnCloseWindowButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &907832498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6990,6 +6993,7 @@ GameObject:
   - component: {fileID: 1431372149}
   - component: {fileID: 1431372152}
   - component: {fileID: 1431372153}
+  - component: {fileID: 1431372154}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -7086,6 +7090,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioMixer: {fileID: 24300002, guid: 8ecb2071f7296314fb90364e161e24b3, type: 2}
+  _allSound: {fileID: 154412787}
+  _music: {fileID: 1465280469}
+  _buttons: {fileID: 197013318}
+  _sfx: {fileID: 1590807323}
+  _mute: {fileID: 542551652}
+--- !u!114 &1431372154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431372146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfac9eb8ae889c84ebe0690afeb568fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetWindow: {fileID: 1431372152}
+  _button: {fileID: 1708869844}
 --- !u!1 &1465280467
 GameObject:
   m_ObjectHideFlags: 0
@@ -8557,19 +8580,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1708869845}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1431372152}
-        m_TargetAssemblyTypeName: Window, Assembly-CSharp
-        m_MethodName: OnCloseWindowButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1708869845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8726,19 +8737,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1883726162}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 856147000}
-        m_TargetAssemblyTypeName: PauseWindow, Assembly-CSharp
-        m_MethodName: OnRestartButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1883726162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8965,19 +8964,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1954567199}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 171180061}
-        m_TargetAssemblyTypeName: DeathWindow, Assembly-CSharp
-        m_MethodName: OnQuitButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1954567199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9098,19 +9085,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1982339176}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 171180061}
-        m_TargetAssemblyTypeName: DeathWindow, Assembly-CSharp
-        m_MethodName: OnRestartButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1982339176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9231,19 +9206,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2018730243}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 856147000}
-        m_TargetAssemblyTypeName: PauseWindow, Assembly-CSharp
-        m_MethodName: OnQuitButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2018730243
 MonoBehaviour:
   m_ObjectHideFlags: 0

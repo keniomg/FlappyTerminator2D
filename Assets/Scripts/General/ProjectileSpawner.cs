@@ -112,13 +112,9 @@ public class ProjectileSpawner : MonoBehaviour
 
     private void OnUnitStatusChanged(GameObject changedObject, UnitStatusTypes unitStatusType)
     {
-        switch (unitStatusType)
+        if (unitStatusType is UnitStatusTypes.Died)
         {
-            case UnitStatusTypes.Died:
-                IsAttackAvailable = false;
-                break;
-            default:
-                break;
+            IsAttackAvailable = false;
         }
     }
 }

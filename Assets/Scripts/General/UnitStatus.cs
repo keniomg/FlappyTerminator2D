@@ -45,8 +45,6 @@ public class UnitStatus : MonoBehaviour
             case UnitStatusTypes.Damaged:
                 StartCoroutine(HandleDamagedStatusEvent());
                 break;
-            default:
-                break;
         }
     }
 
