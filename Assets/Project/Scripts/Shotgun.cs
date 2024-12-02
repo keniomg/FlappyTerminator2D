@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Shotgun : MonoBehaviour
@@ -29,15 +27,14 @@ public class Shotgun : MonoBehaviour
 
     private void OnShoot()
     {
-        //RaycastShoot(_cameraTransform.position, _cameraTransform.forward, _maxDistance, _targetLayer);
-        ProjectileShoot(_startPoint.position, _startPoint.forward * _projectileVelocity);
+        ProjectileShoot(_startPoint.position, GetDirection() * _projectileVelocity);
     }
 
     private void ProjectileShoot(Vector3 startPoint, Vector3 direction)
     {
         Projectile projectile = Instantiate(_prefab);
         projectile.Initialize(_damage, _playerCollider);
-        projectile.Shoot(startPoint, GetDirection());
+        projectile.Shoot(startPoint, direction);
     }
 
     private Vector3 GetDirection()
@@ -45,22 +42,9 @@ public class Shotgun : MonoBehaviour
         if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hitInfo))
         {
             Debug.Log(hitInfo.transform.position);
-            return (hitInfo.transform.position - _startPoint.position).normalized;
+            return (hitInfo.point - _startPoint.position).normalized;
         }
 
-        return Vector3.forward;
-    }
-
-    private void RaycastShoot(Vector3 startPoint, Vector3 direction, float maxDistance, LayerMask targetLayer)
-    {
-        if (Physics.Raycast(startPoint, direction, out RaycastHit hitInfo, maxDistance, targetLayer, QueryTriggerInteraction.Ignore))
-        {
-            Health health = hitInfo.collider.GetComponentInParent<Health>();
-
-            if (health != null)
-            {
-                health.TakeDamage(_damage);
-            }
-        }
+        return _cameraTransform.forward;
     }
 }
